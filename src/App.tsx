@@ -6,10 +6,28 @@ import './App.css'
 
 function App() {
   const altchaRef = useRef<HTMLInputElement>(null)
-  
+
+  const handleVerified = (ev: Event | CustomEvent, payload: string) => {
+    ev.preventDefault()
+    formSubmit(payload)
+  }
+
+  const handleStateChange = (ev: Event | CustomEvent) => {
+    console.group('Altcha state change:', ev)
+    console.log('Altcha payload:', altchaRef.current?.value)
+    console.groupEnd()
+  }
+
+  const formSubmit = (payload: string) => {
+    console.group('Form submitted!')
+    console.log('Altcha payload:', altchaRef.current?.value)
+    console.log('Altcha payload (event):', payload)
+    console.groupEnd()
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log('Altcha payload:', altchaRef.current?.value)
+    // formSubmit()
   }
 
   return (
@@ -40,6 +58,8 @@ function App() {
 
           <Altcha
             ref={altchaRef}
+            onStateChange={handleStateChange}
+            onVerified={handleVerified}
           />
 
         </fieldset>
